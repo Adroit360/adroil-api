@@ -5,6 +5,7 @@ const globalErrorHandler = require("./controllers/error_controller");
 const AppError = require("./utils/appError");
 
 const authRoute = require("./routes/auth_route");
+const userRoute = require("./routes/user_routes");
 
 // initialize app
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 
 // routes
 app.use("/api/v1", authRoute);
+app.use("/api/v1", userRoute);
 
 // handling unhandled routes
 app.all("*", (req, res, next) => {
