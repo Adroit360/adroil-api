@@ -27,11 +27,9 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  if ((!email, !password)) {
+  if (!email || !password) {
     return next(new AppError("Please provide email and password!", 400));
   }
-
-  console.log("yes");
 
   const user = await User.findOne({ email }).select("+password");
 
