@@ -4,6 +4,7 @@ const validator = require("validator");
 const leadSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    name: { type: String, required: [true, "Name is required"] },
     status: {
       type: String,
       enum: ["new", "contacted", "working", "qualified", "unqualified"],
