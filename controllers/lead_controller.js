@@ -16,7 +16,7 @@ exports.allLeads = catchAsync(async (req, res) => {
 exports.singleLead = catchAsync(async (req, res) => {
   const query = req.params.id;
 
-  const lead = await Lead.findById(query);
+  const lead = await Lead.findById(query).populate("user", "name");
   return res.status(200).json({ status: "success", lead });
 });
 
