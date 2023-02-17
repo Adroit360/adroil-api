@@ -20,8 +20,16 @@ const leadSchema = new mongoose.Schema(
       lowercase: true,
     },
     rating: { type: String, enum: ["hot", "warm", "cold"] },
+    active: { type: Boolean, default: true },
+    notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
+    files: [{ title: String, link: String }],
   },
   { timestamps: true }
 );
+
+leadSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
 
 module.exports = mongoose.model("Lead", leadSchema);
