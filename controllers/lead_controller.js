@@ -5,9 +5,7 @@ const factory = require("../utils/handlerFactory");
 exports.newLead = factory.createOne(Lead);
 
 exports.allLeads = catchAsync(async (req, res) => {
-  const leads = await Lead.find()
-    .sort("-createdAt")
-    .populate("user notes", "name");
+  const leads = await Lead.find().sort("-createdAt").populate("user", "name");
 
   return res.status(200).json({
     status: "success",
