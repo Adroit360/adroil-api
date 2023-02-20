@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const noteSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    title: { type: String, required: [true, "note title required"] },
-    description: { type: String, requirs: [true, "description required"] },
+    user: { type: mongoose.Schema.ObjectId, ref: "User" },
+    title: { type: String, required: [true, "Title is required"] },
+    description: { type: String, required: [true, "Description is required"] },
   },
   { timestamps: true }
 );

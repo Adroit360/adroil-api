@@ -1,3 +1,5 @@
+const _ = require("lodash");
+
 const Lead = require("../models/lead_model");
 const Note = require("../models/note_model");
 
@@ -29,16 +31,17 @@ exports.updateWithNote = catchAsync(async (req, res) => {
   const { title, description, status } = req.body;
   const id = req.params.id;
 
-  let note = new Note.create({
-    title,
-    description,
-  });
+  let notes = await Note.create(req.body);
+
+  console.log(notes);
 
   let lead = await Lead.findById(id);
   lead = _.extend(lead, status);
 
-  lead.notes.push(note._id);
-  await note.save();
+  lead.notes.push(notes._id);
+
+  await lead.save();
+  await notes.save();
 
   res.status(200).json({ status: "success", lead });
 });
