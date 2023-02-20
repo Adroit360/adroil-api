@@ -51,3 +51,14 @@ exports.getOne = (Model) => {
     });
   });
 };
+
+exports.getAll = (Model) => {
+  return catchAsync(async (req, res, next) => {
+    let doc = Model.find();
+
+    res.status(200).json({
+      status: "success",
+      doc,
+    });
+  });
+};

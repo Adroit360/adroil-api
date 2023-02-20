@@ -28,15 +28,13 @@ exports.singleLead = catchAsync(async (req, res) => {
 exports.updateLead = factory.updateOne(Lead);
 
 exports.updateWithNote = catchAsync(async (req, res) => {
-  const { title, description, status } = req.body;
+  const { title, description } = req.body;
   const id = req.params.id;
 
-  let notes = await Note.create(req.body);
-
-  console.log(notes);
+  let notes = await Note.create({ title, description });
 
   let lead = await Lead.findById(id);
-  lead = _.extend(lead, status);
+  lead = _.extend(lead, title);
 
   lead.notes.push(notes._id);
 

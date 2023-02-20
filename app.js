@@ -7,6 +7,7 @@ const AppError = require("./utils/appError");
 const authRoute = require("./routes/auth_route");
 const userRoute = require("./routes/user_routes");
 const leadRoute = require("./routes/lead_route");
+const accountRoute = require("./routes/account_route");
 
 // initialize app
 const app = express();
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/api/v1", authRoute);
 app.use("/api/v1", userRoute);
 app.use("/api/v1", leadRoute);
+app.use("/api/v1", accountRoute);
 
 // handling unhandled routes
 app.all("*", (req, res, next) => {

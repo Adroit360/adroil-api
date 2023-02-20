@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const accountSchema = new mongoose.Schema(
   {
@@ -16,13 +17,15 @@ const accountSchema = new mongoose.Schema(
     contacts: [{ type: mongoose.Types.ObjectId, ref: "Contacts" }],
     opportunities: [{ type: mongoose.Types.ObjectId, ref: "Opportunities" }],
     files: [{ title: String, link: String }],
-    active: { type: Boolean, default: "false" },
+    active: { type: Boolean, default: true, select: false },
   },
   { timestamps: true }
 );
 
-accountSchema.pre(/^find/, function (next) {
-  this.populate("");
+accountSchema.pre(/^findBy/, function (next) {
+  this.populate("contacts opportunities user");
+  this.findBy({ active: { $ne: false } });
+  next();
 });
 
 module.exports = mongoose.model("Account", accountSchema);
