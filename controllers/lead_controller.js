@@ -1,10 +1,13 @@
 const Lead = require("../models/lead_model");
+const Note = require("../models/note_model");
+
 const catchAsync = require("../utils/catchAsync");
 const factory = require("../utils/handlerFactory");
 
 exports.newLead = factory.createOne(Lead);
 
 exports.allLeads = catchAsync(async (req, res) => {
+  console.log("Hello Enoch");
   const leads = await Lead.find().sort("-createdAt").populate("user", "name");
 
   return res.status(200).json({
@@ -21,3 +24,21 @@ exports.singleLead = catchAsync(async (req, res) => {
 });
 
 exports.updateLead = factory.updateOne(Lead);
+
+exports.updateWithNote = catchAsync(async (req, res) => {
+  const { title, description, status } = req.body;
+  const id = req.params.id;
+
+  let note = new Note.create({
+    title,
+    description,
+  });
+
+  let lead = await Lead.findById(id);
+  lead = _.extend(lead, status);
+
+  lead.notes.push(note._id);
+  await note.save();
+
+  res.status(200).json({ status: "success", lead });
+});
