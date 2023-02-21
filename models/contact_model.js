@@ -29,14 +29,14 @@ const contactSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// contactSchema.pre(/^find/, function (next) {
-//   this.find({ active: { $ne: false } });
-//   next();
-// });
+contactSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
 
-// contactSchema.pre(/^findBy/, function (next) {
-//   this.populate("user account");
-//   next();
-// });
+contactSchema.pre(/^findBy/, function (next) {
+  this.populate("user account");
+  next();
+});
 
 module.exports = mongoose.model("Contact", contactSchema);

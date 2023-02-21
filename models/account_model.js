@@ -22,10 +22,10 @@ const accountSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// accountSchema.pre(/^findBy/, function (next) {
-//   this.populate("contacts opportunities user");
-//   this.findBy({ active: { $ne: false } });
-//   next();
-// });
+accountSchema.pre(/^findBy/, function (next) {
+  this.populate("contacts opportunities user");
+  this.findBy({ active: { $ne: false } });
+  next();
+});
 
 module.exports = mongoose.model("Account", accountSchema);
