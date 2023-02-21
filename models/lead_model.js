@@ -27,9 +27,9 @@ const leadSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-leadSchema.pre(/^find/, function (next) {
-  this.find({ active: { $ne: false } });
-  next();
-});
+// leadSchema.pre(/^find/, function (next) {
+//   this.find({ active: { $ne: false } });
+//   next();
+// });
 
 module.exports = mongoose.model("Lead", leadSchema);

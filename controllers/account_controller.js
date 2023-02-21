@@ -1,5 +1,6 @@
 const Account = require("../models/account_model");
 const catchAsync = require("../utils/catchAsync");
+
 const factory = require("../utils/handlerFactory");
 
 exports.addAccount = catchAsync(async (req, res) => {

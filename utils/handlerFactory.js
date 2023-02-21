@@ -1,5 +1,5 @@
-const AppError = require("./appError");
 const catchAsync = require("./catchAsync");
+const AppError = require("./appError");
 
 exports.deleteOne = (Model) => {
   return catchAsync(async (req, res, next) => {
@@ -39,7 +39,7 @@ exports.createOne = (Model) => {
 
 exports.getOne = (Model) => {
   return catchAsync(async (req, res, next) => {
-    let doc = Model.findById(req.params.id);
+    let doc = await Model.findById(req.params.id);
 
     if (!doc) {
       return next(new AppError("No document found", 404));
@@ -54,11 +54,31 @@ exports.getOne = (Model) => {
 
 exports.getAll = (Model) => {
   return catchAsync(async (req, res, next) => {
-    let doc = Model.find();
+    console.log("Hello");
+
+    let doc = await Model.find();
+
+    console.log(doc);
 
     res.status(200).json({
       status: "success",
       doc,
     });
+  });
+};
+
+exports.softDelete = (Model) => {
+  return catchAsync(async (req, res, next) => {
+    const doc = await Model.findByIdAndUpdate(
+      req.params.id,
+      { active: false },
+      { new: true, runValidators: true }
+    );
+
+    if (!doc) {
+      return next(new AppError("No document found", 404));
+    }
+
+    res.status(200).json({ status: "success", doc });
   });
 };
