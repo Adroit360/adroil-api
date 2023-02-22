@@ -8,7 +8,7 @@ const handleCastErrorDB = (err) => {
 };
 // Dublicate Field Error
 const handleDuplicateFieldsDB = (err) => {
-  const value = err.keyValue.name;
+  const value = err.keyValue.email;
   const message = `Duplicate field value: "${value}". Please use another value!`;
   return new AppError(message, 400);
 };
@@ -48,6 +48,10 @@ module.exports = (err, req, res, next) => {
 
   let error = { ...err };
   error.message = err.message;
+
+  if (error.name === "CasError") error = handleCastErrorDB(error);
+  if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+  if (error.name === "ValidationError") error = handleValidationErrorDB(error);
 
   sendError(error, req, res);
 };

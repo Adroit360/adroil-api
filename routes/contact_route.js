@@ -5,15 +5,13 @@ const JWT = require("../utils/jwt");
 
 router.use(JWT);
 
-router
-  .route("/contacts")
-  .get(contactController.allContact)
-  .post(contactController.addContact);
+router.route("/contacts").get(contactController.allContact);
 
 router
   .route("/contact/:id")
   .get(contactController.singleContact)
   .put(contactController.updateContact)
-  .delete(contactController.deleteContact);
+  .delete(contactController.deleteContact)
+  .post(contactController.addContact);
 
 module.exports = router;

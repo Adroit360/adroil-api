@@ -26,9 +26,9 @@ app.use("/api/v1", accountRoute);
 app.use("/api/v1", contactRoute);
 
 // handling unhandled routes
-app.all("*", (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
+// app.all("*", (req, res, next) => {
+//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+// });
 
 // global error handler middleware
 app.use(globalErrorHandler);

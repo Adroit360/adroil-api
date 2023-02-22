@@ -14,7 +14,7 @@ const accountSchema = new mongoose.Schema(
     },
     type: String,
     industry: String,
-    contacts: [{ type: mongoose.Types.ObjectId, ref: "Contacts" }],
+    contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Contacts" }],
     opportunities: [{ type: mongoose.Types.ObjectId, ref: "Opportunities" }],
     files: [{ title: String, link: String }],
     active: { type: Boolean, default: true, select: false },

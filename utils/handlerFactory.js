@@ -54,9 +54,7 @@ exports.getOne = (Model) => {
 
 exports.getAll = (Model) => {
   return catchAsync(async (req, res, next) => {
-    console.log("Hello");
-
-    let doc = await Model.find();
+    let doc = await Model.find().sort("-updatedAt");
 
     console.log(doc);
 

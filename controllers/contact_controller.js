@@ -6,7 +6,7 @@ const factory = require("../utils/handlerFactory");
 
 exports.addContact = catchAsync(async (req, res) => {
   let contact = await Contact.create(req.body);
-  contact.user = req.user;
+  contact.user = req.user.id;
 
   let account = await Account.findById(req.params.id);
 

@@ -4,8 +4,10 @@ const catchAsync = require("../utils/catchAsync");
 const factory = require("../utils/handlerFactory");
 
 exports.addAccount = catchAsync(async (req, res) => {
-  let account = new Account.create(req.body);
-  account.user = req.user;
+  let account = await Account.create(req.body);
+  account.user = req.user.id;
+
+  console.log(account);
 
   await account.save();
   res.status(200).json({ status: "success", account });
