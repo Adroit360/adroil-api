@@ -14,17 +14,19 @@ const accountSchema = new mongoose.Schema(
     },
     type: String,
     industry: String,
-    contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Contacts" }],
-    opportunities: [{ type: mongoose.Types.ObjectId, ref: "Opportunities" }],
+    contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Contact" }],
+    opportunities: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Opportunity" },
+    ],
     files: [{ title: String, link: String }],
     active: { type: Boolean, default: true, select: false },
   },
   { timestamps: true }
 );
 
-accountSchema.pre(/^findBy/, function (next) {
-  this.populate("contacts opportunities user");
-  this.findBy({ active: { $ne: false } });
+accountSchema.pre(/^find/, function (next) {
+  this.populate(["user", "contacts", "opportunities"]);
+  this.find({ active: { $ne: false } });
   next();
 });
 

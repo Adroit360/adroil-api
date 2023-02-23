@@ -13,7 +13,8 @@ const app = require("./app");
 mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to database"));
+  .then(() => console.log("Connected to database"))
+  .catch((err) => console.log(err));
 
 // server
 app.listen(process.env.PORT || 5500, () => {

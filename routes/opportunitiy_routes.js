@@ -5,7 +5,7 @@ const JWT = require("../utils/jwt");
 
 router.use(JWT);
 
-router.get("/opportunities", oppoController.addOpportunity);
+router.get("/opportunities", oppoController.allOpportunities);
 
 router
   .route("/opportunity/:id")

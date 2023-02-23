@@ -19,14 +19,14 @@ const opportunitiesSchema = new mongoose.Schema(
         "closed",
         "cancelled",
       ],
-      default: "qualification",
+      // default: "qualification",
     },
     close_date: Date,
     amount: Number,
-    notes: [{ type: Schema.Types.ObjectId, ref: "Note" }],
+    notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
     last_modified: String,
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Opportunities", opportunitiesSchema);
+module.exports = mongoose.model("Opportunity", opportunitiesSchema);
