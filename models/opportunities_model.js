@@ -7,10 +7,9 @@ const opportunitiesSchema = new mongoose.Schema(
     account: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Accounts",
-      required: [true, "Account is required"],
     },
     status: {
-      tpye: String,
+      type: String,
       enum: [
         "qualification",
         "meeting",
@@ -19,7 +18,7 @@ const opportunitiesSchema = new mongoose.Schema(
         "closed",
         "cancelled",
       ],
-      // default: "qualification",
+      default: "qualification",
     },
     close_date: Date,
     amount: Number,

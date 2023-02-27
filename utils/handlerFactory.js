@@ -31,7 +31,9 @@ exports.updateOne = (Model) => {
 exports.createOne = (Model) => {
   return catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
-    doc.user = req.user;
+    doc.user = req.user.id;
+
+    await doc.save();
 
     res.status(201).json({ status: "success", doc });
   });
@@ -39,7 +41,10 @@ exports.createOne = (Model) => {
 
 exports.getOne = (Model) => {
   return catchAsync(async (req, res, next) => {
+    console.log("why");
     let doc = await Model.findById(req.params.id);
+
+    console.log(doc);
 
     if (!doc) {
       return next(new AppError("No document found", 404));

@@ -14,4 +14,6 @@ router
   .delete(contactController.deleteContact)
   .post(contactController.addContact);
 
+router.get("/edit/contact/:id", contactController.addAccountToContact);
+
 module.exports = router;

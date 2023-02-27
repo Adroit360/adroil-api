@@ -33,8 +33,11 @@ exports.updateWithNote = catchAsync(async (req, res) => {
 
   let notes = await Note.create({ title, description });
 
-  let lead = await Lead.findById(id);
-  lead = _.extend(lead, title);
+  let lead = await Lead.findByIdAndUpdate(
+    id,
+    { status: title },
+    { new: true, runValidators: true }
+  );
 
   lead.notes.push(notes._id);
 
