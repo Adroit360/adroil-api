@@ -44,8 +44,6 @@ exports.getOne = (Model) => {
     console.log("why");
     let doc = await Model.findById(req.params.id);
 
-    console.log(doc);
-
     if (!doc) {
       return next(new AppError("No document found", 404));
     }
@@ -60,8 +58,6 @@ exports.getOne = (Model) => {
 exports.getAll = (Model) => {
   return catchAsync(async (req, res, next) => {
     let doc = await Model.find().sort("-updatedAt");
-
-    console.log(doc);
 
     res.status(200).json({
       status: "success",
@@ -84,4 +80,10 @@ exports.softDelete = (Model) => {
 
     res.status(200).json({ status: "success", doc });
   });
+};
+
+exports.removeObjectWithId = (arr, id) => {
+  const objWithIdIndex = arr.findIndex((obj) => obj.id === id);
+  arr.splice(objWithIdIndex, 1);
+  return arr;
 };

@@ -14,4 +14,6 @@ router
   .patch(oppoController.deleteOpportunities)
   .post(oppoController.addOpportunity);
 
+router.put("/edit/note/opportunity/:id", oppoController.updateWithNote);
+
 module.exports = router;

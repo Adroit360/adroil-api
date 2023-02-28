@@ -5,6 +5,7 @@ const categorySchema = new mongoose.Schema(
     name: { type: String, required: [true, "Name is required"] },
     size: Number,
     limit: Number,
+    rate: Number,
   },
   { timestamps: true }
 );

@@ -47,3 +47,38 @@ exports.addAccountToContact = catchAsync(async (req, res) => {
 
   res.status(200).json({ status: "success", contact });
 });
+
+exports.unlinkAccountContact = catchAsync(async (req, res) => {
+  const { contact, account } = req.body;
+
+  const contactDet = await Contact.findById(contact).populate("accounts");
+  const accountDet = await Account.findById(account);
+
+  accountArray = contactDet.accounts;
+  contactArray = accountDet.contacts;
+
+  // const objWithIdIndex = arr.findIndex((obj) => obj.id === id);
+
+  // contact.accounts.splice()
+
+  // console.log("account", accountArray);
+  // console.log("contact", contactArray);
+
+  await factory.removeObjectWithId(accountArray, account);
+  await factory.removeObjectWithId(contactArray, contact);
+
+  // console.log("start here");
+
+  // const accountIndex = contactDet.accounts.findIndex(
+  //   (ind) => ind._id === account
+  // );
+
+  // console.log(accountIndex);
+
+  await contact.save();
+  await account.save();
+
+  res
+    .status(200)
+    .json({ status: "success", message: "E finis. Me ano get anything talk" });
+});

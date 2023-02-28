@@ -16,4 +16,6 @@ router
 
 router.get("/edit/contact/:id", contactController.addAccountToContact);
 
+router.put("/unlink", contactController.unlinkAccountContact);
+
 module.exports = router;

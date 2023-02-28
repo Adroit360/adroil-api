@@ -4,9 +4,10 @@ const opportunitiesSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     name: { type: String, required: [true, "Name is required"] },
+    product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     account: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Accounts",
+      ref: "Account",
     },
     status: {
       type: String,
@@ -24,8 +25,15 @@ const opportunitiesSchema = new mongoose.Schema(
     amount: Number,
     notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
     last_modified: String,
+    active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
+
+opportunitiesSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  this.populate(["notes", "user"]);
+  next();
+});
 
 module.exports = mongoose.model("Opportunity", opportunitiesSchema);
