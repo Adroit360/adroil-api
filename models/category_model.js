@@ -6,6 +6,7 @@ const categorySchema = new mongoose.Schema(
     size: Number,
     limit: Number,
     rate: Number,
+    active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

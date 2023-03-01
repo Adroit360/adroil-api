@@ -14,7 +14,7 @@ router
   .delete(contactController.deleteContact)
   .post(contactController.addContact);
 
-router.get("/edit/contact/:id", contactController.addAccountToContact);
+router.put("/edit/contact/:id", contactController.addAccountToContact);
 
 router.put("/unlink", contactController.unlinkAccountContact);
 

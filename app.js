@@ -9,6 +9,8 @@ const userRoute = require("./routes/user_routes");
 const leadRoute = require("./routes/lead_route");
 const accountRoute = require("./routes/account_route");
 const contactRoute = require("./routes/contact_route");
+const productRoute = require("./routes/product_route");
+const categoryRoute = require("./routes/category_route");
 const opportunituesRoute = require("./routes/opportunitiy_routes");
 
 // initialize app
@@ -25,6 +27,8 @@ app.use("/api/v1", userRoute);
 app.use("/api/v1", leadRoute);
 app.use("/api/v1", accountRoute);
 app.use("/api/v1", contactRoute);
+app.use("/api/v1", productRoute);
+app.use("/api/v1", categoryRoute);
 app.use("/api/v1", opportunituesRoute);
 
 // handling unhandled routes

@@ -7,6 +7,11 @@ const productSchema = new mongoose.Schema(
     title: { type: String, required: [true, "Title is required"] },
     description: String,
     price: Number,
+    size: Number,
+    limit: Number,
+    rate: Number,
+    quantity: Number,
+    active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

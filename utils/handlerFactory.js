@@ -41,7 +41,6 @@ exports.createOne = (Model) => {
 
 exports.getOne = (Model) => {
   return catchAsync(async (req, res, next) => {
-    console.log("why");
     let doc = await Model.findById(req.params.id);
 
     if (!doc) {
