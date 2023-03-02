@@ -86,3 +86,20 @@ exports.removeObjectWithId = (arr, id) => {
   arr.splice(objWithIdIndex, 1);
   return arr;
 };
+
+exports.verifyId = async (Model) => {
+  const min = 100000;
+  const max = 999999;
+
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+  let existingId = await Model.findOne({ refId: randomNumber });
+
+  while (existingId) {
+    randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    existingId = await Model.findOne({ refId: randomNumber });
+  }
+
+  return randomNumber;
+};

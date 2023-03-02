@@ -9,11 +9,16 @@ const productSchema = new mongoose.Schema(
     price: Number,
     size: Number,
     limit: Number,
-    rate: Number,
     quantity: Number,
+    expiry_date: Date,
     active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
+
+productSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
 
 module.exports = mongoose.model("Product", productSchema);

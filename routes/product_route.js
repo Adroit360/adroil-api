@@ -16,4 +16,6 @@ router
   .put(productController.updateProduct)
   .patch(productController.deleteProduct);
 
+router.get("/product-orders", productController.orderProductList);
+
 module.exports = router;
