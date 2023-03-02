@@ -32,7 +32,7 @@ const opportunitiesSchema = new mongoose.Schema(
 
 opportunitiesSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
-  this.populate(["notes", "user"]);
+  this.populate(["notes", "user", "product"]);
   next();
 });
 

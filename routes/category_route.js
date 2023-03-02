@@ -6,7 +6,7 @@ const categoryController = require("../controllers/category_controller");
 router.use(JWT);
 
 router
-  .route("/catgories")
+  .route("/categories")
   .get(categoryController.allCategory)
   .post(categoryController.addCategory);
 
