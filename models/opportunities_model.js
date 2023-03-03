@@ -26,6 +26,7 @@ const opportunitiesSchema = new mongoose.Schema(
     notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
     last_modified: String,
     active: { type: Boolean, default: true },
+    refId: String,
   },
   { timestamps: true }
 );

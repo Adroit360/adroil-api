@@ -12,6 +12,7 @@ const productSchema = new mongoose.Schema(
     quantity: Number,
     expiry_date: Date,
     active: { type: Boolean, default: true },
+    refId: String,
   },
   { timestamps: true }
 );

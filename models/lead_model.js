@@ -23,6 +23,7 @@ const leadSchema = new mongoose.Schema(
     active: { type: Boolean, default: true },
     notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
     files: [{ title: String, link: String }],
+    refId: String,
   },
   { timestamps: true }
 );

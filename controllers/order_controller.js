@@ -14,8 +14,6 @@ exports.addOrder = catchAsync(async (req, res) => {
   order.user = req.user.id;
   order.refId = reference;
 
-  console.log(order);
-
   await order.save();
   res.status(200).json({ status: "success", order });
 });

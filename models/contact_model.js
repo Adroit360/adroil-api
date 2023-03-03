@@ -25,6 +25,7 @@ const contactSchema = new mongoose.Schema(
       zip: String,
     },
     active: { type: Boolean, default: true, select: false },
+    refId: String,
   },
   { timestamps: true }
 );

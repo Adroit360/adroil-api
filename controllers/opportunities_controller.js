@@ -6,9 +6,16 @@ const catchAsync = require("../utils/catchAsync");
 const factory = require("../utils/handlerFactory");
 
 exports.addOpportunity = catchAsync(async (req, res) => {
+  var reference;
+
+  await factory.verifyId(Opportunities).then((result) => {
+    reference = result;
+  });
+
   let oppo = await Opportunities.create(req.body);
   oppo.user = req.user.id;
   oppo.account = req.params.id;
+  oppo.refId = reference;
 
   const account = await Account.findById(req.params.id);
   account.opportunities.push(oppo._id);

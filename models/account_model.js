@@ -20,6 +20,7 @@ const accountSchema = new mongoose.Schema(
     ],
     files: [{ title: String, link: String }],
     active: { type: Boolean, default: true, select: false },
+    refId: String,
   },
   { timestamps: true }
 );

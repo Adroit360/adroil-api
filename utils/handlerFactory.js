@@ -30,8 +30,15 @@ exports.updateOne = (Model) => {
 
 exports.createOne = (Model) => {
   return catchAsync(async (req, res, next) => {
+    var reference;
+
+    await this.verifyId(Model).then((result) => {
+      reference = result;
+    });
+
     const doc = await Model.create(req.body);
     doc.user = req.user.id;
+    doc.refId = reference;
 
     await doc.save();
 
@@ -102,4 +109,16 @@ exports.verifyId = async (Model) => {
   }
 
   return randomNumber;
+};
+
+exports.checkAvailabitlity = (arr, val) => {
+  let idArr = arr.map((item) => {
+    return item._id.toString();
+  });
+
+  return idArr.some((result) => {
+    console.log(result);
+    console.log(val.toString());
+    val.toString() == result;
+  });
 };

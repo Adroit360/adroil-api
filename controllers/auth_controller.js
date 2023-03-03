@@ -19,7 +19,14 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  var reference;
+
+  await factory.verifyId(User).then((result) => {
+    reference = result;
+  });
+
   const newUser = await User.create(req.body);
+  newUser.refId = reference;
   createSendToken(newUser, 201, res);
 });
 

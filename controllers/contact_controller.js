@@ -5,20 +5,23 @@ const catchAsync = require("../utils/catchAsync");
 const factory = require("../utils/handlerFactory");
 
 exports.addContact = catchAsync(async (req, res) => {
+  var reference;
+
+  await factory.verifyId(Contact).then((result) => {
+    reference = result;
+  });
+
   let contact = await Contact.create(req.body);
   contact.user = req.user.id;
+  contact.refId = reference;
 
   let account = await Account.findById(req.params.id);
 
-  const checkAvailability = account.contacts.some((res) => contact._id === res);
+  contact.accounts.push(req.params.id);
+  account.contacts.push(contact._id);
 
-  if (!checkAvailability) {
-    contact.accounts.push(req.params.id);
-    account.contacts.push(contact._id);
-
-    await account.save();
-    await contact.save();
-  }
+  await account.save();
+  await contact.save();
 
   res
     .status(200)
@@ -43,9 +46,9 @@ exports.addAccountToContact = catchAsync(async (req, res) => {
   const contact = await Contact.findById(req.params.id);
   const account = await Account.findById(req.body._id);
 
-  const checkAvailability = account.contacts.some((res) => contact._id === res);
+  const exist = await Account.findOne({ contacts: req.params.id });
 
-  if (!checkAvailability) {
+  if (!exist) {
     account.contacts.push(contact._id);
     contact.accounts.push(account._id);
 
