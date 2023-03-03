@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const opportunitiesSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    name: { type: String, required: [true, "Name is required"] },
+    name: { type: String },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     account: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,6 +27,7 @@ const opportunitiesSchema = new mongoose.Schema(
     last_modified: String,
     active: { type: Boolean, default: true },
     refId: String,
+    quantity: Number,
   },
   { timestamps: true }
 );
