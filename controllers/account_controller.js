@@ -18,7 +18,13 @@ exports.addAccount = catchAsync(async (req, res) => {
   res.status(200).json({ status: "success", account });
 });
 
-exports.allAccount = factory.getAll(Account);
+exports.allAccount = catchAsync(async (req, res) => {
+  const doc = await Account.find()
+    .sort("-updateAt")
+    .populate(["notes", "user", "product", "account"]);
+
+  res.status(200).json({ status: "success", doc });
+});
 
 exports.singleAccount = factory.getOne(Account);
 

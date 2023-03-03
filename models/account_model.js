@@ -26,7 +26,7 @@ const accountSchema = new mongoose.Schema(
 );
 
 accountSchema.pre(/^find/, function (next) {
-  this.populate(["user", "contacts", "opportunities"]);
+  // this.populate(["user", "contacts", "opportunities"]);
   this.find({ active: { $ne: false } });
   next();
 });

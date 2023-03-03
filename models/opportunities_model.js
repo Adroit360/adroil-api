@@ -5,10 +5,7 @@ const opportunitiesSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     name: { type: String },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-    account: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Account",
-    },
+    account: { type: mongoose.Schema.Types.ObjectId, ref: "Account" },
     status: {
       type: String,
       enum: [
@@ -16,7 +13,8 @@ const opportunitiesSchema = new mongoose.Schema(
         "meeting",
         "price qoute",
         "negotiation",
-        "closed",
+        "won",
+        "lost",
         "cancelled",
       ],
       default: "qualification",
@@ -34,7 +32,7 @@ const opportunitiesSchema = new mongoose.Schema(
 
 opportunitiesSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
-  this.populate(["notes", "user", "product"]);
+  this.populate(["notes", "user", "product", "account"]);
   next();
 });
 
