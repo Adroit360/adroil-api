@@ -21,12 +21,23 @@ exports.addAccount = catchAsync(async (req, res) => {
 exports.allAccount = catchAsync(async (req, res) => {
   const doc = await Account.find()
     .sort("-updateAt")
-    .populate(["notes", "user", "product", "account"]);
+    .populate(["user", "contacts", "opportunities"]);
 
   res.status(200).json({ status: "success", doc });
 });
 
-exports.singleAccount = factory.getOne(Account);
+exports.singleAccount = catchAsync(async (req, res) => {
+  const doc = await Account.findById(req.params.id);
+
+  if (!doc) {
+    return next(new AppError("No document found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    doc,
+  });
+});
 
 exports.updateAccount = factory.updateOne(Account);
 

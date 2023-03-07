@@ -12,7 +12,7 @@ const orderSchema = new mongoose.Schema(
     quantity: Number,
     status: {
       type: String,
-      enum: ["pending", "on-rute", "complete"],
+      enum: ["pending", "on-route", "complete"],
       default: "pending",
     },
   },

@@ -14,6 +14,8 @@ const productRoute = require("./routes/product_route");
 const categoryRoute = require("./routes/category_route");
 const opportunituesRoute = require("./routes/opportunitiy_routes");
 
+const testRoute = require("./routes/test_route");
+
 // initialize app
 const app = express();
 
@@ -21,6 +23,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+app.use("/api/v1", testRoute);
 
 // routes
 app.use("/api/v1", authRoute);
