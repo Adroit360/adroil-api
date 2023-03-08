@@ -27,7 +27,7 @@ exports.allAccount = catchAsync(async (req, res) => {
 });
 
 exports.singleAccount = catchAsync(async (req, res) => {
-  const doc = await Account.findById(req.params.id);
+  const doc = await Account.findById(req.params.id).populate("contacts");
 
   if (!doc) {
     return next(new AppError("No document found", 404));

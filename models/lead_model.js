@@ -1,3 +1,4 @@
+const { sortedIndexOf } = require("lodash");
 const mongoose = require("mongoose");
 const validator = require("validator");
 
@@ -24,6 +25,7 @@ const leadSchema = new mongoose.Schema(
     notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
     files: [{ title: String, link: String }],
     refId: String,
+    source: String,
   },
   { timestamps: true }
 );
