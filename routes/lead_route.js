@@ -16,7 +16,7 @@ router
   .patch(leadController.updateLead);
 
 router.put("/note/lead/:id", leadController.updateWithNote);
-
 router.post("/upload/leads", leadController.updateLead);
+router.put("/lead/files/:id", leadController.leadFile);
 
 module.exports = router;

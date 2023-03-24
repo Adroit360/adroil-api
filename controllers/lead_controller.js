@@ -3,6 +3,8 @@ const csv = require("csvtojson");
 
 const Lead = require("../models/lead_model");
 const Note = require("../models/note_model");
+const File = require("../models/file_model");
+const User = require("../models/user_model");
 
 const catchAsync = require("../utils/catchAsync");
 const factory = require("../utils/handlerFactory");
@@ -23,7 +25,6 @@ exports.newLead = catchAsync(async (req, res) => {
 });
 
 exports.allLeads = catchAsync(async (req, res) => {
-  console.log("Hello Enoch");
   const leads = await Lead.find().sort("-createdAt").populate("user", "name");
 
   return res.status(200).json({
@@ -35,7 +36,22 @@ exports.allLeads = catchAsync(async (req, res) => {
 exports.singleLead = catchAsync(async (req, res) => {
   const query = req.params.id;
 
-  const lead = await Lead.findById(query).populate("user");
+  const lead = await Lead.findById(query)
+    .populate("user")
+    .populate({
+      path: "notes",
+      populate: {
+        path: "user",
+        model: "User",
+      },
+    })
+    .populate({
+      path: "files",
+      populate: {
+        path: "user",
+        model: "User",
+      },
+    });
   return res.status(200).json({ status: "success", lead });
 });
 
@@ -46,6 +62,7 @@ exports.updateWithNote = catchAsync(async (req, res) => {
   const id = req.params.id;
 
   let notes = await Note.create({ title, description });
+  notes.user = req.user.id;
 
   let lead = await Lead.findByIdAndUpdate(
     id,
@@ -92,4 +109,21 @@ exports.uploadLead = catchAsync(async (req, res) => {
           .json({ status: "success", message: "Successfully uploaded" });
       });
     });
+});
+
+exports.leadFile = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+
+  const file = await File.create(req.body);
+  file.user = req.user.id;
+
+  const leads = await Lead.findById(id);
+  leads.files.push(file._id);
+
+  await leads.save();
+  await file.save();
+
+  res
+    .status(201)
+    .json({ status: "success", message: "File added successfully" });
 });

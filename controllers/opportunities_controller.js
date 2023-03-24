@@ -39,6 +39,7 @@ exports.updateWithNote = catchAsync(async (req, res) => {
   const id = req.params.id;
 
   let notes = await Note.create({ title, description });
+  notes.user = req.user.id;
 
   let oppo = await Opportunities.findByIdAndUpdate(
     id,
